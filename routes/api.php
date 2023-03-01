@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BoardingCardController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+/**
+ * Boarding cards sorting.
+ */
+Route::get('/boarding-cards/sort', [BoardingCardController::class, 'sort']);
+
+/**
+ * Boarding cards CRUD operations.
+ */
+Route::get('/boarding-cards', [BoardingCardController::class, 'index']);
+Route::get('/boarding-cards/{boarding_card}', [BoardingCardController::class, 'get'])->missing([BoardingCardController::class, 'missing']);
+Route::post('/boarding-cards', [BoardingCardController::class, 'store']);
+Route::put('/boarding-cards/{boarding_card}', [BoardingCardController::class, 'update'])->missing([BoardingCardController::class, 'missing']);
+Route::delete('/boarding-cards/{boarding_card}', [BoardingCardController::class, 'destroy'])->missing([BoardingCardController::class, 'missing']);
