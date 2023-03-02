@@ -9,6 +9,9 @@ use Illuminate\Support\Arr;
 
 class BoardingCardSorter
 {
+    /**
+     * Boarding card repository (to retirieve all the cards at the beginning of the algorithm).
+     */
     private BoardingCardRepository $boardingCardRepository;
 
     /**
