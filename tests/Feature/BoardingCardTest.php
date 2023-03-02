@@ -88,7 +88,7 @@ class BoardingCardTest extends TestCase
     }
 
     /**
-     * Test tthe creation of a new card.
+     * Test the creation of a new card.
      */
     public function test_create_card(): void
     {
@@ -115,6 +115,36 @@ class BoardingCardTest extends TestCase
                         ->where('departureLocation', $card->departureLocation)
                         ->where('arrivalLocation', $card->arrivalLocation)
                         ->where('transportType', $card->transportType)
+                        ->etc()
+                )
+            );
+    }
+
+    /**
+     * Test the update of a card.
+     */
+    public function test_update_card(): void
+    {
+        $card = BoardingCard::factory()->create();
+
+        $response = $this->put('/api/boarding-cards/' . $card->id, [
+            'departureLocation' => 'A',
+            'arrivalLocation' => 'B',
+            'transportType' => 'test',
+        ]);
+
+        $response
+            ->assertStatus(200)
+            ->assertJson(
+                fn (AssertableJson $json) =>
+                $json->has(
+                    'data',
+                    fn ($json) =>
+                    $json
+                        ->has('id')
+                        ->where('departureLocation', 'A')
+                        ->where('arrivalLocation', 'B')
+                        ->where('transportType', 'test')
                         ->etc()
                 )
             );
